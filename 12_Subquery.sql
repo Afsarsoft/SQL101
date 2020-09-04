@@ -1,6 +1,10 @@
 -- In Sub Queries, select queries run inside other queries 
 -- Sub Queries run first and return values being used in the outer query (main query)
 
+
+-- https://www.geeksforgeeks.org/sql-join-vs-subquery/
+
+
 -- Using AdventureWorks2019 DB
 USE AdventureWorks2019
 
