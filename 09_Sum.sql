@@ -1,25 +1,27 @@
--- Using AdventureWorks2019 DB
-USE AdventureWorks2019
+-- Using Northwind DB
+USE Northwind
 
-SELECT SalesOrderID
-   , SUM(LineTotal) AS [Order Total]
-   , SUM(OrderQty) AS [Number Of Items]
-   , COUNT(DISTINCT ProductID) AS [Unique Items]
-FROM Sales.SalesOrderDetail
-GROUP BY SalesOrderID
+SELECT OrderID,
+    SUM(UnitPrice) AS [Order Total],
+    SUM(Quantity) AS [Number Of Items],
+    COUNT(DISTINCT ProductID) AS [Unique Items]
+FROM dbo.[Order Details]
+GROUP BY OrderID
 ORDER BY [Order Total] DESC;
 
-SELECT ProductID
-   , SUM(OrderQty) AS [Total Qty Sold]
-FROM Sales.SalesOrderDetail
+SELECT ProductID,
+    SUM(Quantity) AS [Total Quantity Sold]
+FROM dbo.[Order Details]
 GROUP BY ProductID
-ORDER BY [Total Qty Sold] DESC;
+ORDER BY [Total Quantity Sold] DESC;
 
-SELECT S.ProductID
-   , P.Name
-   , SUM(S.OrderQty) AS [Total Qty Sold]
-FROM Sales.SalesOrderDetail AS S
-   INNER JOIN Production.Product AS P
-   ON S.ProductID = P.ProductID
-GROUP BY S.ProductID, P.Name
-ORDER BY [Total Qty Sold] DESC;
+SELECT O.ProductID,
+    P.ProductName,
+    SUM(Quantity) AS [Total Quantity Sold]
+FROM dbo.[Order Details] AS O
+    INNER JOIN dbo.Products AS P
+    ON O.ProductID = P.ProductID
+GROUP BY O.ProductID, P.ProductName
+ORDER BY [Total Quantity Sold] DESC;
+
+

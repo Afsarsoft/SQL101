@@ -1,17 +1,8 @@
--- Using AdventureWorks2019 DB
-USE AdventureWorks2019
+-- Using Northwind DB
+USE Northwind
 
-SELECT City, StateProvinceID
-FROM Person.Address
-GROUP BY City, StateProvinceID
+SELECT City, CompanyName
+FROM dbo.Customers
+GROUP BY City, CompanyName
 ORDER BY City;
 
-SELECT City, StateProvinceID, COUNT(*) AS [Count Of Address]
-FROM Person.Address
-GROUP BY City, StateProvinceID
-ORDER BY City;
-
-SELECT City, StateProvinceID, COUNT(*) AS [Count Of Address]
-FROM Person.Address
-GROUP BY City, StateProvinceID
-ORDER BY [Count Of Address] DESC;

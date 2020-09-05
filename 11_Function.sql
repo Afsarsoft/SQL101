@@ -1,108 +1,88 @@
--- Using AdventureWorks2019 DB
--- https://docs.microsoft.com/en-us/sql/t-sql/functions/functions?view=sql-server-ver15
+-- Using Northwind DB
+USE Northwind
 
-USE AdventureWorks2019
+SELECT FirstName,
+    UPPER(FirstName) AS UpperCaseFirstName,
+    LEN(FirstName) AS LengthOfFirstName,
+    LastName,
+    LOWER(LastName) AS LowerCaseLastName,
+    LEFT(LastName, 3) AS First3LettersLastName,
+    RIGHT(LastName, 3) AS Last3LettersLastName,
+    TRIM(LastName) AS TrimmedLastName
+FROM dbo.Employees;
 
-SELECT FirstName
-   , UPPER(FirstName) AS UpperCaseFirstName
-   , LEN(FirstName) AS LengthOfFirstName
-   , LastName
-   , LOWER(LastName) AS LowerCaseLastName
-   , LEFT(LastName, 3) AS First3LettersLastName
-   , RIGHT(LastName, 3) AS Last3LettersLastName
-   , TRIM(LastName) AS TrimmedLastName
-FROM Person.Person;
+SELECT FirstName,
+    LastName,
+    CONCAT(FirstName, ' ', LastName) As FullName1,
+    -- Better approach   
+    CONCAT_WS(' ', FirstName, LastName) As FullName2
+FROM dbo.Employees;
 
-SELECT FirstName
-   , LastName
-   , CONCAT(FirstName, ' ', MiddleName, ' ', LastName) As FullName1
-   -- Bettre approach   
-   , CONCAT_WS(' ', FirstName, MiddleName, LastName) As FullName2
-FROM Person.Person;
+SELECT CONCAT_WS(' ', FirstName, LastName) As FullName,
+    HireDate,
+    YEAR(HireDate) AS [Hier Year],
+    MONTH(HireDate) AS [Hier Month],
+    DAY(HireDate) AS [Hier Day]
+FROM dbo.Employees;
 
-SELECT BusinessEntityID
-   , SalesYTD
-   , ROUND(SalesYTD, 2) AS Round2
-   , ROUND(SalesYTD, -2) AS RoundHunders
-   , CEILING(SalesYTD) AS RoundCeiling
-   , FLOOR(SalesYTD) AS RoundFloor
-FROM Sales.SalesPerson;
-
-SELECT BusinessEntityID
-   , HireDate
-   , YEAR(HireDate) AS [Hier Year]
-   , MONTH(HireDate) AS [Hier Month]
-   , DAY(HireDate) AS [Hier Day]
-FROM HumanResources.Employee;
-
-SELECT YEAR(HireDate) AS [Hier Year]
-   , COUNT(*) AS [New Hires]
-FROM HumanResources.Employee
+SELECT YEAR(HireDate) AS [Hier Year],
+    COUNT(*) AS Count
+FROM dbo.Employees
 GROUP BY YEAR(HireDate);
 
 -- Current Date
 SELECT GETDATE()
 SELECT GETUTCDATE()
 
-SELECT BusinessEntityID
-   , HireDate
-   , DATEDIFF(day, HireDate, GETDATE()) AS [Days Since Hire]
-FROM HumanResources.Employee;
+SELECT CONCAT_WS(' ', FirstName, LastName) As FullName,
+    HireDate,
+    DATEDIFF(day, HireDate, GETDATE()) AS [Days Since Hire]
+FROM dbo.Employees;
 
-SELECT BusinessEntityID
-   , HireDate
-   , DATEDIFF(year, HireDate, GETDATE()) AS [Years Since Hire]
-   -- 10 Year Anniversary
-   , DATEADD(year, 10, HireDate) AS [Anniversary Date]
-FROM HumanResources.Employee;
+SELECT CONCAT_WS(' ', FirstName, LastName) As FullName,
+    HireDate,
+    DATEDIFF(year, HireDate, GETDATE()) AS [Years Since Hire],
+    -- 30 Year Anniversary
+    DATEADD(year, 30, HireDate) AS [Anniversary Date]
+FROM dbo.Employees;
 
-SELECT BusinessEntityID
-   , HireDate
-   , FORMAT(HireDate, 'dddd') AS [Hier Day]
-   , FORMAT(HireDate, 'dddd, MMMM dd, yyyy') AS HierDateF1
-   , FORMAT(HireDate, 'd-MMM') AS HierDateF2
-FROM HumanResources.Employee;
+SELECT CONCAT_WS(' ', FirstName, LastName) As FullName,
+    HireDate,
+    FORMAT(HireDate, 'dddd') AS [Hier Day],
+    FORMAT(HireDate, 'dddd, MMMM dd, yyyy') AS HierDateF1,
+    FORMAT(HireDate, 'd-MMM') AS HierDateF2
+FROM dbo.Employees;
 
 -- Getting random rows
--- Useful for audit 
-SELECT WorkOrderID
-FROM Production.WorkOrder;
+-- Useful for audit
+SELECT EmployeeID
+FROM dbo.Employees;
 
-SELECT WorkOrderID
+SELECT EmployeeID
    , NEWID() AS [Random Number]
-FROM Production.WorkOrder
+FROM dbo.Employees
 ORDER BY [Random Number];
 
-SELECT TOP 10
-   WorkOrderID
+SELECT TOP 5
+    EmployeeID
    , NEWID() AS [Random Number]
-FROM Production.WorkOrder
+FROM dbo.Employees
 ORDER BY [Random Number];
 
 -- IIF 
 -- Like IF THEN ELSE
-SELECT BusinessEntityID
-   , SalesYTD
-FROM Sales.SalesPerson;
+SELECT ProductID,
+    ProductName,
+    UnitsInStock
+FROM dbo.Products;
 
-SELECT BusinessEntityID
-   , SalesYTD
-   , IIF(SalesYTD > 2000000, 'Met Sales Goal', 'Has not met goal') AS Status
-FROM Sales.SalesPerson;
+SELECT ProductID,
+    ProductName,
+    UnitsInStock,
+    IIF(UnitsInStock > 10, 'No need to order', 'Need to order') AS Status
+FROM dbo.Products;
 
-SELECT IIF(SalesYTD > 2000000, 'Met Sales Goal', 'Has not met goal') AS Status
-   , COUNT(*) AS [Total Count]
-FROM Sales.SalesPerson
-GROUP BY IIF(SalesYTD > 2000000, 'Met Sales Goal', 'Has not met goal');
-
-
-
-
-
-
-
-
-
-
-
-
+SELECT IIF(UnitsInStock > 10, 'No need to order', 'Need to order') AS Status,
+    COUNT(*) AS Count
+FROM dbo.Products
+GROUP BY IIF(UnitsInStock > 10, 'No need to order', 'Need to order');

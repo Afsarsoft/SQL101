@@ -1,17 +1,21 @@
--- Using AdventureWorks2019 DB
-USE AdventureWorks2019
+-- Using Northwind DB
+USE Northwind
 
-SELECT Color, COUNT(*) AS [Number Of Products]
-FROM Production.Product
-WHERE Color is NOT NULL
-GROUP BY Color;
+SELECT UnitsOnOrder, COUNT(*) AS Count
+FROM dbo.Products
+WHERE UnitsOnOrder <> 0
+GROUP BY UnitsOnOrder;
 
--- Only colors with more than 25 products
-SELECT Color, COUNT(*) AS [Number Of Products]
-FROM Production.Product
-WHERE Color is NOT NULL
-GROUP BY Color
-HAVING COUNT(*) > 25;
--- HAVING NumberOfProducts > 25;
+SELECT UnitsOnOrder, COUNT(*) AS Count
+FROM dbo.Products
+WHERE UnitsOnOrder <> 0
+GROUP BY UnitsOnOrder
+HAVING COUNT(*) > 2;
+
+SELECT UnitsOnOrder, COUNT(*) AS Count
+FROM dbo.Products
+WHERE UnitsOnOrder <> 0
+GROUP BY UnitsOnOrder
+HAVING COUNT(*) > 2;
+-- HAVING Count > 2;
 -- The above will not work, because alias is not ready for query engine yet. So need repeat the aggrgate 
-
