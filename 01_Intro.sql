@@ -10,15 +10,17 @@ SELECT 'Sam', 1;
 SELECT ProductId, ProductName
 FROM dbo.Products;
 
--- Getting everything
+-- Getting everything, getting all rows and all columns without filter 
 -- Avoid using it, be always specific 
 SELECT *
 FROM dbo.Products;
 
+-- Having a filter
 SELECT *
 FROM dbo.Products
 WHERE SupplierId = 1;
 
+-- Having more filters 
 SELECT *
 FROM dbo.Products
 WHERE SupplierId = 1 AND CategoryID = 2;
@@ -27,10 +29,10 @@ SELECT *
 FROM dbo.Products
 WHERE SupplierId IN (1, 2);
 
+-- default sort order 
 SELECT ProductId, ProductName
 FROM dbo.Products
 ORDER BY ProductName ASC;
--- default
 
 SELECT ProductId, ProductName
 FROM dbo.Products

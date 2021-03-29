@@ -45,22 +45,19 @@ GROUP BY OrderID
 HAVING SUM(UnitPrice) > 350;
 
 -- We want to see only the orders that are above average 
--- First need to create the average query 
--- The following gives us the totals, we need the average of these results 
+-- First, get the totals 
 SELECT SUM(UnitPrice) AS myValues
 FROM dbo.[Order Details]
 GROUP BY OrderID
 
--- Now average value of the above query as a single number 
+-- Second, average value of the above query as a single number 
 SELECT AVG(ResultTable.myValues) AS AverageValue
 FROM
     (SELECT SUM(UnitPrice) AS myValues
     FROM dbo.[Order Details]
     GROUP BY OrderID) AS ResultTable;
 
-
 -- Now we take the above and use it in HAVING clause of original query 
--- Sub queries can also be used in the WHERE or HAVING clauses 
 -- Here is, only the orders that are above average 
 SELECT OrderID, SUM(UnitPrice) AS OrderTotal
 FROM dbo.[Order Details]

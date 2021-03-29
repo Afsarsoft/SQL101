@@ -6,7 +6,7 @@ USE Northwind
 -- https://stackoverflow.com/questions/3308122/how-do-i-decide-when-to-use-right-joins-left-joins-or-inner-joins-or-how-to-dete/
 
 -- INNER JOIN (default join)
--- Rows shared beween tables
+-- Rows shared beween tables, matching rows
 SELECT CustomerID, CompanyName, ContactName
 FROM dbo.Customers;
 
@@ -27,7 +27,7 @@ FROM dbo.Customers AS C
 -- (830 rows affected)
 
 -- LEFT OUTER JOIN
--- All rows from table left regradless of matching rows   
+-- Matching rows plus all rows from left. All rows from table left regradless of matching rows   
 -- For not matching rows, we get NULL columns from left table
 -- https://tutorialdeep.com/sql/sql-left-outer-join/ 
 -- https://www.w3schools.com/sql/sql_join_left.asp
@@ -92,7 +92,7 @@ WHERE O.CustomerID IS NULL
 --    (2 rows affected)
 
 -- RIGHT OUTER JOIN
--- All rows from table right regradless of matching rows
+-- Matching rows plus all rows from right. All rows from table right regradless of matching rows
 -- For not matching rows, we get NULL columns from right table  
 -- There is not much using the RIGHT Join. We can always do the LEFT join 
 -- https://stackoverflow.com/questions/436345/when-or-why-would-you-use-a-right-outer-join-instead-of-left
@@ -124,7 +124,7 @@ FROM dbo.Customers AS C
 WHERE O.CustomerID IS NULL;
 
 -- CROSS JOIN
--- Combining every row from one tabel to every row from other table
+-- Combining every row from one table to every row from other table
 -- Usefull to plan a game in an organization
 -- For example, folks want to play soccer games 
 SELECT A.FirstName,

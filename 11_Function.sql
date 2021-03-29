@@ -55,11 +55,14 @@ FROM dbo.Employees;
 
 -- Getting random rows
 -- Useful for audit
+-- In SQL server, the random functions are rand(), newid(), where Rand is random access from 0 to 1, and newid is the unique identifier that generates random uniqueidentifier.
 SELECT EmployeeID
 FROM dbo.Employees;
 
 SELECT EmployeeID
    , NEWID() AS [Random Number]
+   , RAND() AS [Random Number2]
+-- not useful in this context since will get same value for all rows
 FROM dbo.Employees
 ORDER BY [Random Number];
 
